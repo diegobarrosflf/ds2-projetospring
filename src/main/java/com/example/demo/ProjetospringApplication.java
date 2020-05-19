@@ -87,9 +87,9 @@ public class ProjetospringApplication implements CommandLineRunner {
 		
 		
 		Endereco end1 = new Endereco(null, "Rua 3 de maio", "235", "casa 3A", "Bela Vista", "32165485", cl1, cd1);
-		Endereco end2 = new Endereco(null, "Rua Silva Bueno", "222", "sal 1069", "Ipiranga", "32154698", cl1, cd2);
+		Endereco end2 = new Endereco(null, "Rua Silva Bueno", "222", "sal 1069", "Ipiranga", "32154698", cl2, cd2);
 				
-		cl1.getEnderecos().add(end1);
+		cl1.getEnderecos().addAll(Arrays.asList(end1));
 		cl1.getTelefones().addAll(Arrays.asList("3219-6548","6548-9871"));
 		
 		cl2.getEnderecos().add(end2);
