@@ -13,6 +13,7 @@ import com.example.demo.domain.Cidade;
 import com.example.demo.domain.Cliente;
 import com.example.demo.domain.Endereco;
 import com.example.demo.domain.Estado;
+import com.example.demo.domain.ItemPedido;
 import com.example.demo.domain.Pagamento;
 import com.example.demo.domain.PagamentoBoleto;
 import com.example.demo.domain.PagamentoCredito;
@@ -25,6 +26,7 @@ import com.example.demo.repositories.CidadeRepository;
 import com.example.demo.repositories.ClienteRepository;
 import com.example.demo.repositories.EnderecoRepository;
 import com.example.demo.repositories.EstadoRepository;
+import com.example.demo.repositories.ItemPedidoRepository;
 import com.example.demo.repositories.PagamentoRepository;
 import com.example.demo.repositories.PedidoRepository;
 import com.example.demo.repositories.ProdutoRepository;
@@ -55,6 +57,9 @@ public class ProjetospringApplication implements CommandLineRunner {
 	
 	@Autowired
 	PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	ItemPedidoRepository ItemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetospringApplication.class, args);
@@ -67,21 +72,30 @@ public class ProjetospringApplication implements CommandLineRunner {
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escrtório");
 		Categoria cat3 = new Categoria(null, "Cozinha");
+		Categoria cat4 = new Categoria(null, "Tv");
+		Categoria cat5 = new Categoria(null, "Games");
+		
 
 		Produto p1 = new Produto(null, "notebook_DELL", 1500.00);
 		Produto p2 = new Produto(null, "impressora", 350.00);
 		Produto p3 = new Produto(null, "cooktop", 600.00);
+		Produto p4 = new Produto(null, "TV", 1500.00);
+		Produto p5 = new Produto(null, "PlayStation 4", 2500.00);
 
 		cat1.getProdutos().addAll(Arrays.asList(p1, p2));
 		cat2.getProdutos().addAll(Arrays.asList(p2));
 		cat3.getProdutos().addAll(Arrays.asList(p3));
+		cat4.getProdutos().addAll(Arrays.asList(p4));
+		cat5.getProdutos().addAll(Arrays.asList(p5));
 
 		p1.getCategorias().addAll(Arrays.asList(cat1));
 		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategorias().addAll(Arrays.asList(cat3));
+		p4.getCategorias().addAll(Arrays.asList(cat4));
+		p5.getCategorias().addAll(Arrays.asList(cat5));
 
-		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
-		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5));
+		produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 
 		Estado est1 = new Estado(null, "Ceará");
 		Estado est2 = new Estado(null, "São Paulo");
@@ -129,6 +143,22 @@ public class ProjetospringApplication implements CommandLineRunner {
 		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pg1,pg2));
 		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.0, 1, p1.getPreco());
+		ItemPedido ip2 = new ItemPedido(ped1, p2, 0.0, 2, p2.getPreco());
+		ItemPedido ip3 = new ItemPedido(ped1, p3, 0.0, 1, p3.getPreco());
+		ItemPedido ip4 = new ItemPedido(ped2, p4, 0.0, 1, p4.getPreco());
+		ItemPedido ip5 = new ItemPedido(ped2, p5, 0.0, 2, p5.getPreco());
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2,ip3));
+		ped2.getItens().addAll(Arrays.asList(ip4,ip5));
+		
+		p1.getItens().add(ip1);
+		p2.getItens().add(ip2);
+		p3.getItens().add(ip3);
+		p4.getItens().add(ip4);
+		p5.getItens().add(ip5);
+		
+		ItemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3,ip4,ip5));
 
 	}
 
